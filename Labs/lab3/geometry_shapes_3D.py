@@ -79,10 +79,10 @@ class Sphere(Geometry_3D):
         
 # Methods:
 
-    def Surface_area(self):
+    def Surface_area(self) -> float:
         return 4*pi*self.radius**2
 
-    def Volume(self):
+    def Volume(self) -> float:
         return 4/3*pi*self.radius**3
 
     def __repr__(self) -> str:
@@ -97,7 +97,7 @@ class Sphere(Geometry_3D):
         else:
             return False
 
-    def is_inside(self, x1, y1, z1) -> float:
+    def is_inside(self, x1, y1, z1) -> bool:
 
         if not isinstance(x1, (int, float)):
             raise TypeError("x1 must be int/float")
@@ -133,10 +133,10 @@ class Cube(Geometry_3D):
 
 # Methods:
 
-    def Surface_area(self):
+    def Surface_area(self) -> float:
         return 6*self.side1**2
 
-    def Volume(self):
+    def Volume(self) -> float:
         return self.side**3
 
     def __eq__(self, other) -> bool:
@@ -151,7 +151,7 @@ class Cube(Geometry_3D):
     def __repr__(self) -> str:
         return f"Cube of side {self.side} at a central coordinates ({self.x}, {self.y}) has surface area {self.Surface_area()} and volume {self.Volume()}."
     
-    def is_inside(self, x1, y1, z1) -> float:
+    def is_inside(self, x1, y1, z1) -> bool:
 
         if not isinstance(x1, (int, float)):
             raise TypeError("x1 must be int/float")

@@ -69,10 +69,10 @@ class Circle(Geometry_2D):
      
 # Methods:
 
-    def area(self):
+    def area(self) -> float:
         return pi*self.radius**2
 
-    def circumference(self):
+    def circumference(self) -> float:
         return 2*pi*self.radius
 
     def __repr__(self) -> str:
@@ -87,7 +87,7 @@ class Circle(Geometry_2D):
         else:
             return False
 
-    def is_inside(self, x1, y1) -> float:
+    def is_inside(self, x1, y1) -> bool:
 
         if not isinstance(x1, (int, float)):
             raise TypeError("x1 must be int/float")
@@ -138,10 +138,10 @@ class Rectangle(Geometry_2D):
 
 # Methods:
 
-    def area(self):
+    def area(self) -> float:
         return self.side1*self.side2
 
-    def circumference(self):
+    def circumference(self) -> float:
         return 2*(self.side1 + self.side2)
 
     def __eq__(self, other) -> bool:
@@ -153,7 +153,7 @@ class Rectangle(Geometry_2D):
     def __repr__(self) -> str:
         return f"Rectangle of sides {self.side1} and {self.side2} at a central coordinates ({self.x}, {self.y}) has area {self.area()} and circumference {self.circumference()}."
     
-    def is_inside(self, x1, y1) -> float:
+    def is_inside(self, x1, y1) -> bool:
 
         if not isinstance(x1, (int, float)):
             raise TypeError("x1 must be int/float")
