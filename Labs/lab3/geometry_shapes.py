@@ -27,6 +27,8 @@ class Geometry_2D:
             raise TypeError("y must be int/float")
         self._y = value
 
+# Error raises when x or y is not valid.
+
     def __repr__(self) -> str:
         return f"Geometry_2D with a central coordinates ({self.x}, {self.y})."
 
@@ -40,9 +42,12 @@ class Geometry_2D:
         if not isinstance(y_new, (int, float)):
             raise TypeError("y_new must be int/float")
 
+# Error occurs if the new central point is not valid. 
+
 #####################################################################
 
 """Inheritance Circle -- Geometry_2D"""
+
 
 class Circle(Geometry_2D):
 
@@ -60,7 +65,8 @@ class Circle(Geometry_2D):
         if not isinstance(value, (int, float)):
             raise TypeError("Radius must be int/float")
         self._radius = value
-        
+# Error checking for Radius.
+     
 # Methods:
 
     def area(self):
@@ -70,9 +76,12 @@ class Circle(Geometry_2D):
         return 2*pi*self.radius
 
     def __repr__(self) -> str:
-        return f"Circle of radius {self.radius} at a central coordinates ({self.x}, {self.y}) has area {self.area()}."
+        return f"Circle of radius {self.radius} at a central coordinates ({self.x}, {self.y}) has area {self.area()} and circumference {self.circumference()}."
 
     def __eq__(self, other) -> bool:
+
+# We can also use circumference for comparison
+
         if self.area() == other.area():
             return True
         else:
@@ -85,15 +94,19 @@ class Circle(Geometry_2D):
         if not isinstance(y1, (int, float)):
             raise TypeError("y1 must be int/float")
 
+# Error checking for x1, y1
+
         if (((x1-self.x)**2)+((y1-self.y)**2))**0.5 <= self.radius:
             return True
         else:
             return False
 
-    # With distance smaller or equal than radius, we return True(inside), otherwise False(outside)
+# With distance smaller or equal than radius, we return True(inside), otherwise False(outside)
     
-        
+
+
 """Inheritance Rectangle -- Geometry_2D"""
+
 
 class Rectangle(Geometry_2D):
 
@@ -121,7 +134,7 @@ class Rectangle(Geometry_2D):
         if not isinstance(value, (int, float)):
             raise TypeError("side2 must be int/float")
         self._side2 = value
-
+# Error raise for not vaild side1, side2
 
 # Methods:
 
@@ -138,16 +151,24 @@ class Rectangle(Geometry_2D):
             return False
 
     def __repr__(self) -> str:
-        return f"Rectangle of sides {self.side1} and {self.side2} at a central coordinates ({self.x}, {self.y}) has area {self.area()}."
+        return f"Rectangle of sides {self.side1} and {self.side2} at a central coordinates ({self.x}, {self.y}) has area {self.area()} and circumference {self.circumference()}."
     
     def is_inside(self, x1, y1) -> float:
+
+        if not isinstance(x1, (int, float)):
+            raise TypeError("x1 must be int/float")
+        if not isinstance(y1, (int, float)):
+            raise TypeError("y1 must be int/float")
+
+# Error checking for x1, y1
+
         if ((self.x-self.side1/2) <= x1 <= (self.x+self.side1/2) 
             and (self.y-self.side2/2) <= y1 <= (self.y+self.side2/2)):
             return True
         else:
             return False
 
-
+# With the point coordinates smaller or equal to the half sides, will be within the rectangle.
 
     
     
