@@ -160,9 +160,9 @@ class Cube(Geometry_3D):
         if not isinstance(z1, (int, float)):
             raise TypeError("z1 must be int/float")
 
-        if ((self.x-self.side) <= x1 <= (self.x+self.side) 
-            and (self.y-self.side) <= y1 <= (self.y+self.side) 
-            and (self.z-self.side) <= z1 <= (self.z+self.side)):
+        if ((self.x-self.side/2) <= x1 <= (self.x+self.side/2) 
+            and (self.y-self.side/2) <= y1 <= (self.y+self.side/2) 
+            and (self.z-self.side/2) <= z1 <= (self.z+self.side/2)):
             return True
         else:
             return False
