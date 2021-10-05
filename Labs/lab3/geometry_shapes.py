@@ -1,11 +1,10 @@
 from math import pi
 
-class Geometry_2D:
+class Geometry:
 
-    def __init__(self, x, y) -> None:
+    def ____(self, x, y) -> None:
         self.x = x
         self.y = y
-        self.center = (x, y)
     
     @property
     def x(self):
@@ -26,12 +25,8 @@ class Geometry_2D:
         if not isinstance(value, (int, float)):
             raise TypeError("y must be int/float")
         self._y = value
-
-# Error raises when x or y is not valid.
-
-    def __repr__(self) -> str:
-        return f"Geometry_2D with a central coordinates ({self.x}, {self.y})."
-
+    
+# Error raises when x, y is not valid.
 
     def translate(self, x_new, y_new) -> float:
         self.x = x_new
@@ -46,16 +41,17 @@ class Geometry_2D:
 
 #####################################################################
 
-"""Inheritance Circle -- Geometry_2D"""
+"""Inheritance Circle -- Geometry"""
 
 
-class Circle(Geometry_2D):
+class Circle(Geometry):
 
     def __init__(self, x, y, radius) -> None:
-        super().__init__(x, y)
+        super().__init__()
+        self.x = x
+        self.y = y
         self.radius = radius
-        self.center = (x, y)
-
+        
     @property
     def radius(self):
         return self._radius
@@ -64,8 +60,9 @@ class Circle(Geometry_2D):
     def radius(self, value):
         if not isinstance(value, (int, float)):
             raise TypeError("Radius must be int/float")
+        if value < 0:
+            raise TypeError("Radius must be a positive value.")
         self._radius = value
-# Error checking for Radius.
      
 # Methods:
 
@@ -103,18 +100,21 @@ class Circle(Geometry_2D):
 
 # With distance smaller or equal than radius, we return True(inside), otherwise False(outside)
     
+    def translate(self, x_new, y_new) -> float:
+        super().translate(x_new, y_new)
+
+"""Inheritance Rectangle -- Geometry"""
 
 
-"""Inheritance Rectangle -- Geometry_2D"""
-
-
-class Rectangle(Geometry_2D):
+class Rectangle(Geometry):
 
     def __init__(self, x, y, side1, side2):
-        super().__init__(x, y)
-        self.side1, self.side2 = side1, side2
-        self.center = (x, y)
-
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.side1 = side1
+        self.side2 = side2
+        
     @property
     def side1(self):
         return self._side1
@@ -123,6 +123,8 @@ class Rectangle(Geometry_2D):
     def side1(self, value):
         if not isinstance(value, (int, float)):
             raise TypeError("side1 must be int/float")
+        if value < 0:
+            raise TypeError("Side1 must be a positive value.")
         self._side1 = value
 
     @property
@@ -133,8 +135,9 @@ class Rectangle(Geometry_2D):
     def side2(self, value):
         if not isinstance(value, (int, float)):
             raise TypeError("side2 must be int/float")
+        if value < 0:
+            raise TypeError("Side2 must be a positive value.")
         self._side2 = value
-# Error raise for not vaild side1, side2
 
 # Methods:
 
@@ -169,6 +172,139 @@ class Rectangle(Geometry_2D):
             return False
 
 # With the point coordinates smaller or equal to the half sides, will be within the rectangle.
+    def translate(self, x_new, y_new) -> float:
+        super().translate(x_new, y_new)
+
+##############################################################################################  
+
+"""Inheritance Sphere -- Circle"""
+
+class Sphere(Circle):
+
+    def __init__(self, x, y, z, radius) -> None:
+        super().__init__(x, y, radius)
+        self.z = z
 
     
+    @property
+    def z(self):
+        return self._z
+
+    @z.setter
+    def z(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError("z must be int/float")
+        self._z = value
     
+        
+# Methods:
+
+    def Surface_area(self) -> float:
+        return 4*pi*self.radius**2
+
+    def Volume(self) -> float:
+        return 4/3*pi*self.radius**3
+
+    def __repr__(self) -> str:
+        return f"Sphere of radius {self.radius} at a central coordinates ({self.x}, {self.y}, {self.z}) has Surface area {self.Surface_area()} and Volume {self.Volume()}."
+
+    def __eq__(self, other) -> bool:
+
+# We use Volume here (Surface_area will be also OK!)
+
+        if self.Volume() == other.Volume():
+            return True
+        else:
+            return False
+
+    def is_inside(self, x1, y1, z1) -> bool:
+
+        if not isinstance(x1, (int, float)):
+            raise TypeError("x1 must be int/float")
+        if not isinstance(y1, (int, float)):
+            raise TypeError("y1 must be int/float")
+        if not isinstance(z1, (int, float)):
+            raise TypeError("z1 must be int/float")
+
+        if (((x1-self.x)**2)+((y1-self.y)**2)+((z1-self.z)**2))**0.5 <= self.radius:
+            return True
+        else:
+            return False
+
+    def translate(self, x_new, y_new, z_new) -> float:
+        self.x = x_new
+        self.y = y_new
+        self.z = z_new
+
+        if not isinstance(x_new, (int, float)):
+            raise TypeError("x_new must be int/float")
+        if not isinstance(y_new, (int, float)):
+            raise TypeError("y_new must be int/float")
+        if not isinstance(z_new, (int, float)):
+            raise TypeError("z_new must be int/float")
+
+"""Inheritance Cube -- Rectangle"""
+
+class Cube(Rectangle):
+
+    def __init__(self, x, y, z, side1, side2):
+        super().__init__(x, y, side1, side2)
+        self.z = z
+    
+    @property
+    def z(self):
+        return self._z
+
+    @z.setter
+    def z(self, value):
+        if not isinstance(value, (int, float)):
+            raise TypeError("z must be int/float")
+        self._z = value
+
+# Methods:
+
+    def Surface_area(self) -> float:
+        return 6*self.side1*self.side2
+
+    def Volume(self) -> float:
+        return self.side1**3
+
+    def __eq__(self, other) -> bool:
+
+# can also use Surface_area as a equal method
+
+        if self.Volume() == other.Volume():
+            return True
+        else:
+            return False
+
+    def __repr__(self) -> str:
+        return f"Cube of side {self.side1} at a central coordinates ({self.x}, {self.y}) has surface area {self.Surface_area()} and volume {self.Volume()}."
+    
+    def is_inside(self, x1, y1, z1) -> bool:
+
+        if not isinstance(x1, (int, float)):
+            raise TypeError("x1 must be int/float")
+        if not isinstance(y1, (int, float)):
+            raise TypeError("y1 must be int/float")
+        if not isinstance(z1, (int, float)):
+            raise TypeError("z1 must be int/float")
+
+        if ((self.x-self.side1/2) <= x1 <= (self.x+self.side1/2) 
+            and (self.y-self.side1/2) <= y1 <= (self.y+self.side1/2) 
+            and (self.z-self.side1/2) <= z1 <= (self.z+self.side1/2)):
+            return True
+        else:
+            return False
+
+    def translate(self, x_new, y_new, z_new) -> float:
+        self.x = x_new
+        self.y = y_new
+        self.z = z_new
+
+        if not isinstance(x_new, (int, float)):
+            raise TypeError("x_new must be int/float")
+        if not isinstance(y_new, (int, float)):
+            raise TypeError("y_new must be int/float")
+        if not isinstance(z_new, (int, float)):
+            raise TypeError("z_new must be int/float")
