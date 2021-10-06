@@ -1,6 +1,14 @@
 from math import pi
 
+
+
 class Geometry:
+    
+    """
+    A main class which represent the coordinates x and y.
+
+    translate(self, x_new, y_new) is a function for the movement x and y.
+    """
 
     def ____(self, x, y) -> None:
         self.x = x
@@ -41,11 +49,32 @@ class Geometry:
 
 #####################################################################
 
-"""Inheritance Circle -- Geometry"""
+### Inheritance Circle -- Geometry ### 
 
 
 class Circle(Geometry):
+    """
+    A class which represent the Circle shape in a central coordinate(x,y).
+    
+    radius(self, value):
+    - the radius of the circle
 
+    area(self) -> float:
+    - the area of the cirlcle
+
+    circumference(self) -> float:
+    - the circumference of the circle
+
+    __repr__(self) -> str:
+    - represent the circle values
+
+    __eq__(self, other) -> bool:
+    - check if the circle is equal to another
+
+    is_inside(self, x1, y1) -> bool:
+    - check if a point inside the circle
+
+    """
     def __init__(self, x, y, radius) -> None:
         super().__init__()
         self.x = x
@@ -103,10 +132,37 @@ class Circle(Geometry):
     def translate(self, x_new, y_new) -> float:
         super().translate(x_new, y_new)
 
-"""Inheritance Rectangle -- Geometry"""
+
+### Inheritance Rectangle -- Geometry ###
 
 
 class Rectangle(Geometry):
+
+    """
+    A class which represent the Rectangle shape in a central coordinate(x,y).
+    
+    side1(self):
+    - the length of the Rectangle
+
+    side2(self):
+    - the height of the Rectangle
+
+    area(self) -> float:
+    - the area of the Rectangle
+
+    circumference(self) -> float:
+    - the circumference of the Rectangle
+
+    __repr__(self) -> str:
+    - represent the Rectangle values
+
+    __eq__(self, other) -> bool:
+    - check if the Rectangle is equal to another
+
+    is_inside(self, x1, y1) -> bool:
+    - check if a point inside the Rectangle
+
+    """
 
     def __init__(self, x, y, side1, side2):
         super().__init__()
@@ -177,9 +233,35 @@ class Rectangle(Geometry):
 
 ##############################################################################################  
 
-"""Inheritance Sphere -- Circle"""
+### Inheritance Sphere -- Circle ###
 
 class Sphere(Circle):
+
+    """
+    A class which represent the Sphere 3D-shape in a central coordinate(x,y,z).
+    
+    radius(self, value):
+    - the radius of the Sphere
+
+    Surface_area(self) -> float:
+    - the surface area of the Sphere
+
+    Volume(self) -> float:
+    - the Volume of the Sphere
+
+    __repr__(self) -> str:
+    - represent the Sphere values
+
+    __eq__(self, other) -> bool:
+    - check if the Sphere is equal to another
+
+    is_inside(self, x1, y1, z1) -> bool:
+    - check if a point inside the Sphere
+
+    translate(self, x_new, y_new, z_new) -> float:
+    - A function for the movement x, y and z
+
+    """
 
     def __init__(self, x, y, z, radius) -> None:
         super().__init__(x, y, radius)
@@ -243,14 +325,46 @@ class Sphere(Circle):
         if not isinstance(z_new, (int, float)):
             raise TypeError("z_new must be int/float")
 
-"""Inheritance Cube -- Rectangle"""
+### Inheritance Cube -- Rectangle ###
 
 class Cube(Rectangle):
+ 
+    """
+    A class which represent the Cube 3D-shape in a central coordinate(x,y,z).
+    
+    side1(self):
+    - one side of the Cube
+
+    side2(self):
+    - one side of the Cube
+    Note here: side1 = side2 = side
+
+    Surface_area(self) -> float:
+    - the surface area of the Cube
+
+    Volume(self) -> float:
+    - the Volume of the Cube
+
+    __repr__(self) -> str:
+    - represent the Cube values
+
+    __eq__(self, other) -> bool:
+    - check if the Cube is equal to another
+
+    is_inside(self, x1, y1, z1) -> bool:
+    - check if a point inside the Cube
+
+    translate(self, x_new, y_new, z_new) -> float:
+    - A function for the movement x, y and z
+
+    """
 
     def __init__(self, x, y, z, side1, side2):
         super().__init__(x, y, side1, side2)
         self.z = z
-    
+
+# side1 = side2! Because the Cube is a child-class of Rectangle, we can not remove the side1, side2
+
     @property
     def z(self):
         return self._z
