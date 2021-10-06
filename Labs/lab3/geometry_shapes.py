@@ -10,7 +10,7 @@ class Geometry:
     translate(self, x_new, y_new) is a function for the movement x and y.
     """
 
-    def ____(self, x, y) -> None:
+    def __init__(self, x, y) -> None:
         self.x = x
         self.y = y
     
@@ -76,9 +76,7 @@ class Circle(Geometry):
 
     """
     def __init__(self, x, y, radius) -> None:
-        super().__init__()
-        self.x = x
-        self.y = y
+        super().__init__(x, y)
         self.radius = radius
         
     @property
@@ -108,7 +106,7 @@ class Circle(Geometry):
 
 # We can also use circumference for comparison
 
-        if self.area() == other.area():
+        if type(self) == type(other) and self.radius == other.radius:
             return True
         else:
             return False
@@ -165,9 +163,7 @@ class Rectangle(Geometry):
     """
 
     def __init__(self, x, y, side1, side2):
-        super().__init__()
-        self.x = x
-        self.y = y
+        super().__init__(x, y)
         self.side1 = side1
         self.side2 = side2
         
@@ -204,7 +200,7 @@ class Rectangle(Geometry):
         return 2*(self.side1 + self.side2)
 
     def __eq__(self, other) -> bool:
-        if self.area() == other.area():
+        if type(self) == type(other) and self.side1 == other.side1 and self.side2 == other.side2:
             return True
         else:
             return False
@@ -294,7 +290,7 @@ class Sphere(Circle):
 
 # We use Volume here (Surface_area will be also OK!)
 
-        if self.Volume() == other.Volume():
+        if type(self) == type(other) and self.radius == other.radius:
             return True
         else:
             return False
@@ -359,11 +355,12 @@ class Cube(Rectangle):
 
     """
 
-    def __init__(self, x, y, z, side1, side2):
-        super().__init__(x, y, side1, side2)
+    def __init__(self, x, y, z, side):
+        super().__init__(x, y, side, side)
         self.z = z
+        self.side = side
 
-# side1 = side2! Because the Cube is a child-class of Rectangle, we can not remove the side1, side2
+# Here side1 = side2 = side
 
     @property
     def z(self):
@@ -378,22 +375,22 @@ class Cube(Rectangle):
 # Methods:
 
     def Surface_area(self) -> float:
-        return 6*self.side1*self.side2
+        return 6*self.side**2
 
     def Volume(self) -> float:
-        return self.side1**3
+        return self.side**3
 
     def __eq__(self, other) -> bool:
 
 # can also use Surface_area as a equal method
 
-        if self.Volume() == other.Volume():
+        if type(self) == type(other) and self.side == other.side:
             return True
         else:
             return False
 
     def __repr__(self) -> str:
-        return f"Cube of side {self.side1} at a central coordinates ({self.x}, {self.y}) has surface area {self.Surface_area()} and volume {self.Volume()}."
+        return f"Cube of side {self.side} at a central coordinates ({self.x}, {self.y}) has surface area {self.Surface_area()} and volume {self.Volume()}."
     
     def is_inside(self, x1, y1, z1) -> bool:
 
@@ -404,9 +401,9 @@ class Cube(Rectangle):
         if not isinstance(z1, (int, float)):
             raise TypeError("z1 must be int/float")
 
-        if ((self.x-self.side1/2) <= x1 <= (self.x+self.side1/2) 
-            and (self.y-self.side1/2) <= y1 <= (self.y+self.side1/2) 
-            and (self.z-self.side1/2) <= z1 <= (self.z+self.side1/2)):
+        if ((self.x-self.side/2) <= x1 <= (self.x+self.side/2) 
+            and (self.y-self.side/2) <= y1 <= (self.y+self.side/2) 
+            and (self.z-self.side/2) <= z1 <= (self.z+self.side/2)):
             return True
         else:
             return False
